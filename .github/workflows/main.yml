@@ -1,0 +1,25 @@
+name: Extract Version and Create Artifact
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Extract version from build.gradle
+      id: extract_version
+      run: echo "::set-output name=version::$(grep -oP '(?<=version ).*' build.gradle)"
+
+    - name: Store version number in artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: my_artifact
+        path: ${{ github.workspace }}
+      env:
+        VERSION_NUMBER: ${{ steps.extract_version.outputs.version }}
