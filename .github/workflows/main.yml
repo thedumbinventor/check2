@@ -1,8 +1,8 @@
 name: Extract Version and Create Artifact
 on:
-  push:
-    branches:
-      - main
+  push: # This will trigger the workflow on every push event
+    branches-ignore: # Optionally, you can ignore certain branches
+      - 'master' # Add branch names to ignore, if any
 
 jobs:
   build:
